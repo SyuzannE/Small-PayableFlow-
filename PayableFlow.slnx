@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PayableFlow.Core/PayableFlow.Core.csproj" />
+    <Project Path="src/PayableFlow.Api/PayableFlow.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PayableFlow.Tests/PayableFlow.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,39 @@
+### Try the API (VS Code REST Client or Visual Studio). Start it with: dotnet run --project src/PayableFlow.Api
+@host = http://localhost:5000
+
+### Create a vendor with "2/10 Net 30" terms
+POST {{host}}/vendors
+Content-Type: application/json
+
+{ "name": "Acme Supplies", "paymentTermsDays": 30, "earlyDiscountPercent": 2, "earlyDiscountDays": 10 }
+
+### Enter a bill
+POST {{host}}/invoices
+Content-Type: application/json
+
+{ "vendorId": 1, "invoiceNumber": "INV-1001", "amount": 1200.00 }
+
+### Same bill again with a typo in the number: rejected as a possible duplicate
+POST {{host}}/invoices
+Content-Type: application/json
+
+{ "vendorId": 1, "invoiceNumber": "INV1001", "amount": 1200.00 }
+
+### Aging report
+GET {{host}}/reports/aging
+
+### Plan a payment run with limited cash
+POST {{host}}/payment-runs/plan
+Content-Type: application/json
+
+{ "budget": 5000 }
+
+### Three-way match
+POST {{host}}/matching
+Content-Type: application/json
+
+{
+  "order":    [ { "sku": "LAP-15", "quantity": 10, "unitPrice": 1000 } ],
+  "receipts": [ { "sku": "LAP-15", "quantity": 6 } ],
+  "invoice":  [ { "sku": "LAP-15", "quantity": 10, "unitPrice": 1000 } ]
+}
